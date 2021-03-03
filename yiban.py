@@ -103,6 +103,12 @@ class YiBan:
         return self.request("https://api.uyiban.com/workFlow/c/work/show/view/%s" % initiate_id, params=params,
                             cookies=self.COOKIES)
 
+    def getFormId(self,wfid):
+        params = {
+            "CSRF": self.CSRF
+        }
+        return self.request("https://api.uyiban.com/workFlow/c/my/form/%s" % wfid, params=params,
+                            cookies=self.COOKIES)
     def getTaskDetail(self, taskId):
         return self.request(
             "https://api.uyiban.com/officeTask/client/index/detail?TaskId=%s&CSRF=%s" % (taskId, self.CSRF),
