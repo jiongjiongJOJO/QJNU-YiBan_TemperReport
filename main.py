@@ -29,7 +29,6 @@ try:
     print("登录成功 %s" % yb.name)
     yb.auth()
     all_task = yb.getUncompletedList()["data"]
-    print(all_task)
     all_task = list(filter(lambda x: "体温报备" in x["Title"], all_task))
     if len(all_task) == 0:
         print("没找到今天体温上报的任务，可能是你已经上报，如果不是请手动上报。")
