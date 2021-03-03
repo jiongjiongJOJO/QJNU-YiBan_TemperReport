@@ -18,9 +18,9 @@ def send(token,message):
     headers = {'Content-Type': 'application/json'}
     requests.post(url, data=body, headers=headers)
 
-user = os.getenv("user")
-password = os.getenv("password")
-token = os.getenv("token")
+user = os.getenv("USER")
+password = os.getenv("PASSWORD")
+token = os.getenv("TOKEN")
 try:
     yb = YiBan(user, password)
     yb.login()
