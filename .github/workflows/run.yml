@@ -1,0 +1,31 @@
+name: main
+
+on:
+    workflow_dispatch:
+    schedule:
+        - cron: "00 4,11,23 * * *"
+    watch:
+        types: [started]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        if: github.event.repository.owner.id == github.event.sender.id
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+
+            - name: "Set up Python"
+              uses: actions/setup-python@v1
+              with:
+                python-version: 3.8
+
+            - name: "安装依赖包"
+              run: |
+                  pip install -r ./requirements.txt
+            - name: "运行脚本"
+              run: python main.py
+              env:
+                  USER: ${{ secrets.USER }}
+                  PASSWORD: ${{ secrets.PASSWORD }}
+                  TOKEN: ${{ secrets.TOKEN }}
