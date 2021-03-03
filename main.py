@@ -38,14 +38,17 @@ try:
         print("找到未上报的任务：", new_task)
         task_detail = yb.getTaskDetail(new_task["TaskId"])["data"]
         print(task_detail)
+        ids = re.compile("\"id\":\"(.*?)\"").findall(yb.getFormId(task_detail["WFId"])["data"]["FormJson"])
+        print(ids)
         ex = {"TaskId": task_detail["Id"],
               "title": "任务信息",
               "content": [{"label": "任务名称", "value": task_detail["Title"]},
                           {"label": "发布机构", "value": task_detail["PubOrgName"]}]}
 
-        dict_form = {"60821d38964ec1973dd63a9e383604b0": ["36.2", "36.3", "36.4", "36.5", "36.6", "36.7", "36.8"][
-            random.randint(0, 6)],  # 随机体温
-                     "73eb01753f0cf36be5ae703022ea7499": ["正常"]}
+        dict_form = {ids[1]: ["36.2", "36.3", "36.4", "36.5", "36.6", "36.7", "36.8"][random.randint(0, 6)],  # 随机体温
+                     ids[2]: "正常"}
+
+
         submit_result = yb.submit(json.dumps(dict_form, ensure_ascii=False), json.dumps(
             ex, ensure_ascii=False), task_detail["WFId"])
         if submit_result["code"] == 0:
