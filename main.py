@@ -38,10 +38,7 @@ try:
         new_task = all_task_sort[0]  # 只取一个最新的
         print("找到未上报的任务：", new_task)
         task_detail = yb.getTaskDetail(new_task["TaskId"])["data"]
-        print(task_detail)
-        print(yb.getFormId(task_detail["WFId"])["data"]["FormJson"])
         ids = re.compile("\"id\":\"(.*?)\"").findall(yb.getFormId(task_detail["WFId"])["data"]["FormJson"])
-        print(ids)
         ex = {"TaskId": task_detail["Id"],
               "title": "任务信息",
               "content": [{"label": "任务名称", "value": task_detail["Title"]},
@@ -51,7 +48,7 @@ try:
                      ids[1]: ["正常"]}
 
 
-        '''submit_result = yb.submit(json.dumps(dict_form, ensure_ascii=False), json.dumps(
+        submit_result = yb.submit(json.dumps(dict_form, ensure_ascii=False), json.dumps(
             ex, ensure_ascii=False), task_detail["WFId"])
         if submit_result["code"] == 0:
             share_url = yb.getShareUrl(submit_result["data"])["data"]["uri"]
@@ -60,7 +57,7 @@ try:
             send(token,"已完成一次体温上报["+task_detail["Title"]+"]<br>访问此网址查看详情："+share_url)
         else:
             print("[%s]遇到了一些错误:%s" % (task_detail["Title"], submit_result["msg"]))
-            send(token,task_detail["Title"]+"遇到了一些错误:"+submit_result["msg"])'''
+            send(token,task_detail["Title"]+"遇到了一些错误:"+submit_result["msg"])
 except Exception as e:
     print("出错啦")
     print(e)
