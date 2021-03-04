@@ -38,15 +38,25 @@ try:
         new_task = all_task_sort[0]  # 只取一个最新的
         print("找到未上报的任务：", new_task)
         task_detail = yb.getTaskDetail(new_task["TaskId"])["data"]
-        ids = re.compile("\"id\":\"(.*?)\"").findall(yb.getFormId(task_detail["WFId"])["data"]["FormJson"])
+        FormList = eval(yb.getFormId(task_detail["WFId"])["data"]["FormJson"].replace("true", "True"))
+        ids = {}
+        for i in FormList:
+            if ('体温' in i['props'].values()):
+                ids['体温'] = i['id']
+            elif ('个人健康是否异常' in i['props'].values()):
+                ids['个人健康是否异常'] = i['id']
+        if('晨检' in task_detail["Title"]):
+            dict_form = {ids['体温']: ["36.2", "36.3", "36.4", "36.5", "36.6", "36.7", "36.8"][random.randint(0, 6)],  # 随机体温
+                         ids['个人健康是否异常']: "正常"}
+        else:
+            #ids = re.compile("\"id\":\"(.*?)\"").findall(yb.getFormId(task_detail["WFId"])["data"]["FormJson"])
+            dict_form = {ids[0]: ["36.2", "36.3", "36.4", "36.5", "36.6", "36.7", "36.8"][random.randint(0, 6)],# 随机体温
+                         ids[1]: ["正常"]}
+
         ex = {"TaskId": task_detail["Id"],
               "title": "任务信息",
               "content": [{"label": "任务名称", "value": task_detail["Title"]},
                           {"label": "发布机构", "value": task_detail["PubOrgName"]}]}
-
-        dict_form = {ids[0]: ["36.2", "36.3", "36.4", "36.5", "36.6", "36.7", "36.8"][random.randint(0, 6)],  # 随机体温
-                     ids[1]: ["正常"]}
-
 
         submit_result = yb.submit(json.dumps(dict_form, ensure_ascii=False), json.dumps(
             ex, ensure_ascii=False), task_detail["WFId"])
