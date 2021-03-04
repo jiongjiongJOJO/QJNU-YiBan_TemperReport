@@ -50,8 +50,8 @@ try:
                          ids['个人健康是否异常']: "正常"}
         else:
             #ids = re.compile("\"id\":\"(.*?)\"").findall(yb.getFormId(task_detail["WFId"])["data"]["FormJson"])
-            dict_form = {ids[0]: ["36.2", "36.3", "36.4", "36.5", "36.6", "36.7", "36.8"][random.randint(0, 6)],# 随机体温
-                         ids[1]: ["正常"]}
+            dict_form = {ids['体温']: ["36.2", "36.3", "36.4", "36.5", "36.6", "36.7", "36.8"][random.randint(0, 6)],# 随机体温
+                         ids['个人健康是否异常']: ["正常"]}
 
         ex = {"TaskId": task_detail["Id"],
               "title": "任务信息",
