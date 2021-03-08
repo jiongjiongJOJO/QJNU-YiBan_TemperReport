@@ -64,11 +64,11 @@ try:
             share_url = yb.getShareUrl(submit_result["data"])["data"]["uri"]
             print("已完成一次体温上报[%s]" % task_detail["Title"])
             print("访问此网址查看详情：%s" % share_url)
-            send(token,"已完成一次体温上报["+task_detail["Title"]+"]<br>访问此网址查看详情："+share_url)
+            #send(token,"已完成一次体温上报["+task_detail["Title"]+"]<br>访问此网址查看详情："+share_url)
         else:
             print("[%s]遇到了一些错误:%s" % (task_detail["Title"], submit_result["msg"]))
             send(token,task_detail["Title"]+"遇到了一些错误:"+submit_result["msg"])
 except Exception as e:
     print("出错啦")
     print(e)
-    send(token,e)
+    send(token,"出错了" + e)
