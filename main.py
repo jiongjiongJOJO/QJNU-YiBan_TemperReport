@@ -22,7 +22,6 @@ def send(token,message):
 user = os.getenv("USER")
 password = os.getenv("PASSWORD")
 token = os.getenv("TOKEN")
-user,password = '15924970393','qwer661236'
 try:
     yb = YiBan(user, password)
     yb.login()
