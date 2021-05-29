@@ -50,7 +50,13 @@ try:
                 ids['获取定位'] = i['id']
         if('晨检' in task_detail["Title"]):
             dict_form = {ids['体温']: ["36.2", "36.3", "36.4", "36.5", "36.6", "36.7", "36.8"][random.randint(0, 6)],  # 随机体温
-                         ids['个人健康是否异常']: "正常"}
+                         ids['个人健康是否异常']: "正常",
+                         ids['获取定位'] : {
+                             "time": util.get_time_no_second(),
+                             "longitude": 103.752319,
+                             "latitude": 25.525995,
+                             "address": "云南省曲靖市麒麟区紫薇路161号靠近曲靖师范学院樱苑3栋"}
+                         }
         else:
             #ids = re.compile("\"id\":\"(.*?)\"").findall(yb.getFormId(task_detail["WFId"])["data"]["FormJson"])
             dict_form = {ids['体温']: ["36.2", "36.3", "36.4", "36.5", "36.6", "36.7", "36.8"][random.randint(0, 6)],# 随机体温
