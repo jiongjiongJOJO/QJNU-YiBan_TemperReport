@@ -26,6 +26,4 @@ jobs:
             - name: "运行脚本"
               run: python main.py
               env:
-                  USER: ${{ secrets.USER }}
-                  PASSWORD: ${{ secrets.PASSWORD }}
-                  TOKEN: ${{ secrets.TOKEN }}
+                  USERS: ${{ secrets.USERS }}
